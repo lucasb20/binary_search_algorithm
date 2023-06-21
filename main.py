@@ -1,12 +1,30 @@
+import binary_search as bs
+import random as r
+import sys        
+
 print('Olá. Vamos definir uma lista.\n')
 
-N = int(input('Digite uma quantidade de números.\n'))
-SHI = int(input('Digite um deslocamento para os números.\n'))
+QTD = int(input('Digite a quantidade números.\n'))
+INI = int(input('Digite o primeiro número da faixa.\n'))
+END = int(input('Digite o último número da faixa.\n'))
 
-array = [x+SHI for x in range(N)]
+if(INI > END):
+    aux = INI
+    INI = END
+    END = aux
 
-array.sort()
+try: 
+    array = r.sample(range(INI,END+1),QTD)
+except:
+    QTD_S = END - INI + 1
+    print(f'\nErro.\nSerão gerados números sem repetição, não há como gerar {QTD} números com {QTD_S} disponíveis.\n')
+    sys.exit(1)
 
-print(array)
+num = int(input('\nDigite um número a ser procurado.\n'))
 
-n = int(input('Digite um número a ser procurado.\n'))
+res = bs.binary_search(array,num)
+
+if res == 'NULL':
+    print(f'Elemento {num} não está presente na lista.\n')
+else:
+    print(f'Elemento {num} foi identificado na posição {res} (ordem crescente).\n')
